@@ -1,8 +1,16 @@
 package handler
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/AlinaZbk/hospital-system/internal/service"
+	"github.com/gin-gonic/gin"
+)
 
 type Handler struct {
+	services *service.Service
+}
+
+func NewHandler(services *service.Service) *Handler {
+	return &Handler{services: services}
 }
 
 func (h *Handler) InitRoutes() *gin.Engine {
@@ -10,16 +18,16 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 	auth := router.Group("/auth")
 	{
-		auth.POST("/sign-up")
-		auth.POST("/sign-in")
+		auth.POST("/sign-up", h.signUp)
+		auth.POST("/sign-in", h.signIn)
 	}
 
 	api := router.Group("/api")
 	{
 		patient := api.Group("/patients")
 		{
-			patient.GET("/", h.GetAllPatients)       // список всех пациентов
-			patient.GET("/:id", h.GetPatientByID)    // карточка конкретного пациента
+			patient.GET("/", h.GetAllPatients)      // список всех пациентов
+			patient.GET("/:id", h.GetPatientByID)   // карточка конкретного пациента
 			patient.POST("/", h.CreatePatient)      // добавление нового пациента
 			patient.PUT("/:id", h.UpdatePatient)    // изменить данные пациента
 			patient.DELETE("/:id", h.DeletePatient) // удаление пациента
@@ -29,13 +37,13 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		{
 			doctor.GET("/", h.GetAllDoctors)    // список всех докторов
 			doctor.GET("/:id", h.GetDoctorByID) // информация о конкретном докторе
-			doctor.POST("/", h.CreateDoctor)   // добавление нового врача
+			doctor.POST("/", h.CreateDoctor)    // добавление нового врача
 		}
 
 		ward := api.Group("/wards")
 		{
-			ward.GET("/", h.GetAllWrads)       // список всех палат
-			ward.GET("/:id", h.GetWardByID)    // информация о конкретной палате
+			ward.GET("/", h.GetAllWrads)      // список всех палат
+			ward.GET("/:id", h.GetWardByID)   // информация о конкретной палате
 			ward.POST("/", h.CreateWard)      // добавление новой палаты
 			ward.PUT("/:id", h.UpdateWard)    // заселить пациента
 			ward.DELETE("/:id", h.DeleteWard) // выселить пациента
@@ -43,7 +51,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 		disease := api.Group("/diseases")
 		{
-			disease.GET("/", h.GetAllDiseases)  // список всех болезней
+			disease.GET("/", h.GetAllDiseases) // список всех болезней
 			disease.POST("/", h.CreateDisease) // добавление новой болезни
 		}
 
@@ -51,7 +59,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		{
 			medical_record.GET("/", h.GetAllMedicalRecords)    // весь список истории болезни
 			medical_record.GET("/:id", h.GetMedicalRecordByID) // история болезни конкретного пациента
-			medical_record.POST("/", h.CreateMedicalRecord)   // добавление записи
+			medical_record.POST("/", h.CreateMedicalRecord)    // добавление записи
 		}
 
 	}
