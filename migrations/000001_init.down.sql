@@ -1,0 +1,11 @@
+DROP TABLE IF EXISTS medical_records;
+
+DROP TABLE IF EXISTS patients;
+
+DROP TABLE IF EXISTS wards;
+
+DROP TABLE IF EXISTS doctors;
+
+DROP TABLE IF EXISTS diseases;
+
+

@@ -1,0 +1,29 @@
+CREATE TABLE wards (
+    id SERIAL PRIMARY KEY,
+    number INT UNIQUE NOT NULL,
+    capacity INT NOT NULL
+);
+CREATE TABLE patients (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    age INT NOT NULL,
+    ward_id INT NOT NULL REFERENCES wards(id) ON DELETE CASCADE
+);
+CREATE TABLE doctors (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    age INT NOT NULL,
+    specialization VARCHAR(255) NOT NULL
+);
+CREATE TABLE diseases (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) UNIQUE NOT NULL
+);
+CREATE TABLE medical_records (
+    id SERIAL PRIMARY KEY,
+    patient_id INT NOT NULL REFERENCES patients(id) ON DELETE CASCADE,
+    doctor_id INT NOT NULL REFERENCES doctors(id) ON DELETE CASCADE,
+    disease_id INT NOT NULL REFERENCES diseases(id) ON DELETE CASCADE,
+    notes TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
