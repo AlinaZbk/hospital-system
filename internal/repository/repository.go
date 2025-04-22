@@ -1,5 +1,7 @@
 package repository
 
+import "github.com/jmoiron/sqlx"
+
 type Repository struct {
 	Authorization
 	PatientRepository
@@ -9,6 +11,6 @@ type Repository struct {
 	MedicalRecordRepository
 }
 
-func NewRepository() *Repository {
+func NewRepository(db *sqlx.DB) *Repository {
 	return &Repository{}
 }
