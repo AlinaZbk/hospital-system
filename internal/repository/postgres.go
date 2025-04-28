@@ -15,6 +15,15 @@ type Config struct {
 	SSLMode  string
 }
 
+const (
+	usersTable           = "users"
+	patientsTable        = "patients"
+	doctorsTable         = "doctors"
+	wardsTable           = "wards"
+	diseasesTable        = "diseases"
+	medical_recordsTable = "medical_records"
+)
+
 func NewPostgresDB(cfg Config) (*sqlx.DB, error) {
 	db, err := sqlx.Open("postgres", fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=%s", cfg.Host, cfg.Port, cfg.Username, cfg.DBName, cfg.Password, cfg.SSLMode))
 	if err != nil {

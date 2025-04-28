@@ -8,4 +8,6 @@ DROP TABLE IF EXISTS doctors;
 
 DROP TABLE IF EXISTS diseases;
 
+DROP TABLE IF EXISTS users;
+
 

@@ -1,3 +1,10 @@
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    username VARCHAR(100) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL
+);
+
 CREATE TABLE wards (
     id SERIAL PRIMARY KEY,
     number INT UNIQUE NOT NULL,
